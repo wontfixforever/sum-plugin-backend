@@ -23,7 +23,7 @@ async def sum_numbers(request: Request):
 
     try:
         response = client.chat.completions.create(
-            model="gpt-4-vision-preview",
+            model="gpt-4o",
             messages=[
                 {
                     "role": "user",
