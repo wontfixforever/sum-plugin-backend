@@ -1,21 +1,28 @@
 from fastapi import FastAPI, Request
-import openai
-import base64
+from openai import OpenAI
+from dotenv import load_dotenv
 import os
+import base64
 
+# Load env variables from .env (for local testing)
+load_dotenv()
+
+# Create the FastAPI app
 app = FastAPI()
 
-# Use your OpenAI API key from environment variable or hard-code it temporarily (not recommended for production)
-openai.api_key = os.getenv("OPENAI_API_KEY", "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")  # Replace with your key or set env var
+# Initialize the OpenAI client with your environment variable
+client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 @app.post("/sum-numbers")
 async def sum_numbers(request: Request):
     data = await request.json()
     image_b64 = data["image"]
+
+    # Format image for OpenAI API (data URL)
     image_data_url = f"data:image/png;base64,{image_b64}"
 
     try:
-        response = openai.ChatCompletion.create(
+        response = client.chat.completions.create(
             model="gpt-4-vision-preview",
             messages=[
                 {
