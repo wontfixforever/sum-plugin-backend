@@ -41,3 +41,15 @@ async def sum_numbers(request: Request):
 
     except Exception as e:
         return { "error": str(e) }
+
+
+from fastapi.middleware.cors import CORSMiddleware
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Or specify ["chrome-extension://your-extension-id"]
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
